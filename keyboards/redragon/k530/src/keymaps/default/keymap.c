@@ -1,87 +1,20 @@
 #include QMK_KEYBOARD_H
 
-enum CUSTOM_KEYCODES {
+enum layer {
+    L_BASE,
+    L_FN,
+    L_MOUSE,
+    L_RGB,
+};
+
+enum keycode {
     KC_LGUI_OR_F13 = SAFE_RANGE,
     KC_RGUI_OR_F13,
     RM_RST,
 };
 
-enum TAP_DANCE {
+enum tap_dance {
     TD_LAYERS,
-};
-
-enum LAYERS {
-    LAYER_1,
-    LAYER_2,
-    LAYER_3,
-    LAYER_4,
-};
-
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [LAYER_1] = LAYOUT_60_ansi(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, KC_BSPC,  //
-                               KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_RBRC, KC_BSLS, //
-                               KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, KC_ENT,        //
-                               KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,          //
-                               KC_LCTL, KC_LGUI_OR_F13, KC_LALT, KC_SPC, KC_RALT, KC_RGUI_OR_F13, KC_RCTL, TD(TD_LAYERS)),
-
-    [LAYER_2] = LAYOUT_60_ansi(_______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, _______,                     //
-                               _______, _______, _______, _______, _______, _______, _______, KC_PGUP, KC_INS, _______, KC_PSCR, _______, _______, _______, //
-                               _______, _______, _______, KC_PGDN, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, _______, _______, _______,           //
-                               _______, _______, KC_DEL, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   //
-                               _______, _______, _______, _______, _______, _______, MO(2), _______),
-
-    [LAYER_3] = LAYOUT_60_ansi(_______, MS_ACL0, MS_ACL1, MS_ACL2, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, //
-                               _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, //
-                               _______, _______, _______, _______, _______, _______, MS_LEFT, MS_DOWN, MS_UP, MS_RGHT, _______, _______, _______,            //
-                               _______, _______, _______, _______, MS_BTN1, MS_BTN3, MS_BTN2, _______, _______, _______, _______, _______,                   //
-                               _______, _______, _______, _______, _______, _______, _______, _______),
-
-    [LAYER_4] = LAYOUT_60_ansi(_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_PREV, RM_NEXT, RM_TOGG, //
-                               _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_SPDD, RM_SPDU, RM_HUED, RM_HUEU, RM_RST,  //
-                               QK_BOOT, _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_SATD, RM_SATU, _______,          //
-                               _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_VALD, RM_VALU, _______,                   //
-                               _______, _______, _______, _______, _______, _______, _______, _______),
-};
-
-const key_override_t *key_overrides[] = {
-    &ko_make_basic(MOD_MASK_SHIFT, MS_LEFT, MS_WHLL),
-    &ko_make_basic(MOD_MASK_SHIFT, MS_DOWN, MS_WHLD),
-    &ko_make_basic(MOD_MASK_SHIFT, MS_UP, MS_WHLU),
-    &ko_make_basic(MOD_MASK_SHIFT, MS_RGHT, MS_WHLR),
-};
-
-void td_layers_finished(tap_dance_state_t *state, void *user_data) {
-    if (state->pressed) {
-        switch (state->count) {
-            case 1:
-                layer_on(LAYER_2);
-                break;
-            case 2:
-                layer_on(LAYER_3);
-                break;
-            case 3:
-                layer_on(LAYER_4);
-                break;
-        }
-    }
-}
-
-void td_layers_reset(tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-        case 1:
-            layer_off(LAYER_2);
-            break;
-        case 2:
-            layer_off(LAYER_3);
-            break;
-        case 3:
-            layer_off(LAYER_4);
-            break;
-    }
-}
-
-tap_dance_action_t tap_dance_actions[] = {
-    [TD_LAYERS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_layers_finished, td_layers_reset),
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -127,3 +60,70 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
     }
 }
+
+void td_layers_finished(tap_dance_state_t *state, void *user_data) {
+    if (state->pressed) {
+        switch (state->count) {
+            case 1:
+                layer_on(L_FN);
+                break;
+            case 2:
+                layer_on(L_MOUSE);
+                break;
+            case 3:
+                layer_on(L_RGB);
+                break;
+        }
+    }
+}
+
+void td_layers_reset(tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 1:
+            layer_off(L_FN);
+            break;
+        case 2:
+            layer_off(L_MOUSE);
+            break;
+        case 3:
+            layer_off(L_RGB);
+            break;
+    }
+}
+
+const key_override_t *key_overrides[] = {
+    &ko_make_basic(MOD_MASK_SHIFT, MS_LEFT, MS_WHLL),
+    &ko_make_basic(MOD_MASK_SHIFT, MS_DOWN, MS_WHLD),
+    &ko_make_basic(MOD_MASK_SHIFT, MS_UP, MS_WHLU),
+    &ko_make_basic(MOD_MASK_SHIFT, MS_RGHT, MS_WHLR),
+};
+
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_LAYERS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_layers_finished, td_layers_reset),
+};
+
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+    [L_BASE] = LAYOUT_60_ansi(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, KC_BSPC,  //
+                              KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_RBRC, KC_BSLS, //
+                              KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, KC_ENT,        //
+                              KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,          //
+                              KC_LCTL, KC_LGUI_OR_F13, KC_LALT, KC_SPC, KC_RALT, KC_RGUI_OR_F13, KC_RCTL, TD(TD_LAYERS)),
+
+    [L_FN] = LAYOUT_60_ansi(_______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, _______,                     //
+                            _______, _______, _______, _______, _______, _______, _______, KC_PGUP, KC_INS, _______, KC_PSCR, _______, _______, _______, //
+                            _______, _______, _______, KC_PGDN, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, _______, _______, _______,           //
+                            _______, _______, KC_DEL, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   //
+                            _______, _______, _______, _______, _______, _______, MO(2), _______),
+
+    [L_MOUSE] = LAYOUT_60_ansi(_______, MS_ACL0, MS_ACL1, MS_ACL2, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, //
+                               _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, //
+                               _______, _______, _______, _______, _______, _______, MS_LEFT, MS_DOWN, MS_UP, MS_RGHT, _______, _______, _______,            //
+                               _______, _______, _______, _______, MS_BTN1, MS_BTN3, MS_BTN2, _______, _______, _______, _______, _______,                   //
+                               _______, _______, _______, _______, _______, _______, _______, _______),
+
+    [L_RGB] = LAYOUT_60_ansi(_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_PREV, RM_NEXT, RM_TOGG, //
+                             _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_SPDD, RM_SPDU, RM_HUED, RM_HUEU, RM_RST,  //
+                             QK_BOOT, _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_SATD, RM_SATU, _______,          //
+                             _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_VALD, RM_VALU, _______,                   //
+                             _______, _______, _______, _______, _______, _______, _______, _______),
+};
