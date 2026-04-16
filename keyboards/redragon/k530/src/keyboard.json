@@ -19,10 +19,8 @@
 		"key_override": true,
 		"nkro": true,
 		"os_detection": true,
-		"rgb_matrix": true,
-		"tap_dance": true
+		"rgb_matrix": true
 	},
-	"tapping": { "term": 500 },
 
 	"dip_switch": {
 		"enabled": true,
