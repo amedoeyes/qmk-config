@@ -3,15 +3,18 @@
 #define SN32F2XX_RGB_MATRIX_ROW_PINS {C15, C0, C1, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14}
 
 #define MK_3_SPEED
+#define MK_MOMENTARY_ACCEL
+#define MK_C_OFFSET_UNMOD 4
+#define MK_C_INTERVAL_UNMOD 8
 #define MK_C_OFFSET_0 2
 #define MK_C_INTERVAL_0 16
 #define MK_C_OFFSET_1 4
 #define MK_C_INTERVAL_1 8
 #define MK_C_OFFSET_2 8
 #define MK_C_INTERVAL_2 4
-#define MK_W_OFFSET_0 1
+#define MK_W_OFFSET_0 2
 #define MK_W_INTERVAL_0 64
-#define MK_W_OFFSET_1 1
+#define MK_W_OFFSET_1 4
 #define MK_W_INTERVAL_1 32
-#define MK_W_OFFSET_2 1
+#define MK_W_OFFSET_2 8
 #define MK_W_INTERVAL_2 16

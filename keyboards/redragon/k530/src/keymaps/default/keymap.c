@@ -2,10 +2,12 @@
 
 typedef enum {
     L_BASE,
-    L_LNAV,
     L_FN,
+    L_SYSTEM,
     L_MOUSE,
     L_RGB,
+    L_QMK,
+    L_LNAV,
 } layer;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -56,10 +58,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 const key_override_t *key_overrides[] = {
-    &ko_make_basic(MOD_MASK_SHIFT, MS_LEFT, MS_WHLL),
-    &ko_make_basic(MOD_MASK_SHIFT, MS_DOWN, MS_WHLD),
-    &ko_make_basic(MOD_MASK_SHIFT, MS_UP, MS_WHLU),
-    &ko_make_basic(MOD_MASK_SHIFT, MS_RGHT, MS_WHLR),
+    &ko_make_basic(MOD_MASK_ALT, MS_LEFT, MS_WHLL),
+    &ko_make_basic(MOD_MASK_ALT, MS_DOWN, MS_WHLD),
+    &ko_make_basic(MOD_MASK_ALT, MS_UP, MS_WHLU),
+    &ko_make_basic(MOD_MASK_ALT, MS_RGHT, MS_WHLR),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -69,27 +71,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,          //
                               KC_LCTL, KC_LOSS, KC_LALT, KC_SPC, KC_RALT, KC_ROSS, KC_RCTL, MO(L_LNAV)),
 
-    [L_LNAV] = LAYOUT_60_ansi(_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   //
-                              _______, _______, _______, _______, TO(L_RGB), _______, _______, _______, _______, _______, _______, _______, _______, _______, //
-                              TO(L_BASE), _______, _______, _______, TO(L_FN), _______, _______, _______, _______, _______, _______, _______, _______,        //
-                              _______, _______, _______, _______, _______, _______, _______, TO(L_MOUSE), _______, _______, _______, _______,                 //
-                              _______, _______, _______, _______, _______, _______, _______, _______),
+    [L_FN] = LAYOUT_60_ansi(XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, XXXXXXX,                    //
+                            XXXXXXX, XXXXXXX, XXXXXXX, KC_END, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGUP, KC_INS, XXXXXXX, KC_PSCR, XXXXXXX, XXXXXXX, XXXXXXX, //
+                            XXXXXXX, XXXXXXX, KC_HOME, KC_PGDN, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, XXXXXXX, XXXXXXX, XXXXXXX,          //
+                            XXXXXXX, XXXXXXX, KC_DEL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                  //
+                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MO(L_LNAV)),
 
-    [L_FN] = LAYOUT_60_ansi(_______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, _______,                     //
-                            _______, _______, _______, _______, _______, _______, _______, KC_PGUP, KC_INS, _______, KC_PSCR, _______, _______, _______, //
-                            _______, _______, _______, KC_PGDN, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, _______, _______, _______,           //
-                            _______, _______, KC_DEL, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   //
-                            _______, _______, _______, _______, _______, _______, _______, _______),
+    [L_SYSTEM] = LAYOUT_60_ansi(XXXXXXX, KC_MUTE, KC_VOLD, KC_VOLU, KC_F20, KC_BRID, KC_BRIU, XXXXXXX, XXXXXXX, KC_MRWD, KC_MFFD, KC_MPRV, KC_MNXT, KC_MPLY,  //
+                                XXXXXXX, XXXXXXX, KC_WAKE, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, //
+                                XXXXXXX, XXXXXXX, KC_SLEP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          //
+                                XXXXXXX, XXXXXXX, KC_PWR, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    //
+                                XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MO(L_LNAV)),
 
-    [L_MOUSE] = LAYOUT_60_ansi(_______, MS_ACL0, MS_ACL1, MS_ACL2, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, //
-                               _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, //
-                               _______, _______, MS_BTN1, MS_BTN3, MS_BTN2, _______, MS_LEFT, MS_DOWN, MS_UP, MS_RGHT, _______, _______, _______,            //
-                               _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   //
-                               _______, _______, _______, _______, _______, _______, _______, _______),
+    [L_MOUSE] = LAYOUT_60_ansi(XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, //
+                               XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, //
+                               XXXXXXX, XXXXXXX, MS_BTN1, MS_BTN3, MS_BTN2, XXXXXXX, MS_LEFT, MS_DOWN, MS_UP, MS_RGHT, XXXXXXX, XXXXXXX, XXXXXXX,            //
+                               MS_ACL2, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MS_ACL2,                   //
+                               MS_ACL0, XXXXXXX, KC_LALT, XXXXXXX, KC_RALT, XXXXXXX, MS_ACL0, MO(L_LNAV)),
 
-    [L_RGB] = LAYOUT_60_ansi(QK_BOOT, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_PREV, RM_NEXT, RM_TOGG, //
-                             _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_SPDD, RM_SPDU, RM_HUED, RM_HUEU, RM_RST,  //
-                             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_SATD, RM_SATU, _______,          //
-                             _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_VALD, RM_VALU, _______,                   //
-                             _______, _______, _______, _______, _______, _______, _______, _______),
+    [L_RGB] = LAYOUT_60_ansi(RM_RST, RM_VALD, RM_VALU, RM_SATD, RM_SATU, RM_SPDD, RM_SPDU, RM_HUED, RM_HUEU, XXXXXXX, XXXXXXX, RM_PREV, RM_NEXT, RM_TOGG,  //
+                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, //
+                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          //
+                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   //
+                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MO(L_LNAV)),
+
+    [L_QMK] = LAYOUT_60_ansi(XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, //
+                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_RBT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  //
+                             XXXXXXX, XXXXXXX, XXXXXXX, DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          //
+                             XXXXXXX, XXXXXXX, XXXXXXX, EE_CLR, XXXXXXX, QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    //
+                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MO(L_LNAV)),
+
+    [L_LNAV] = LAYOUT_60_ansi(XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     //
+                              XXXXXXX, TO(L_QMK), XXXXXXX, XXXXXXX, TO(L_RGB), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, //
+                              TO(L_BASE), XXXXXXX, TO(L_SYSTEM), XXXXXXX, TO(L_FN), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     //
+                              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(L_MOUSE), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   //
+                              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX),
 };
