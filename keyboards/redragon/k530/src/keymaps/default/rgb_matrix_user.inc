@@ -65,14 +65,26 @@ static point_t input_buffer_dequeue(input_buffer_t *ib) {
     return p;
 }
 
-static bool key_is_pressed(point_t p) {
-    return !!(matrix_get_row(p.y) & (1 << p.x));
+static matrix_row_t prev_matrix[MATRIX_ROWS];
+
+static void update_matrix_state(void) {
+    for (uint8_t i = 0; i < MATRIX_ROWS; ++i) {
+        prev_matrix[i] = matrix_get_row(i);
+    }
 }
 
+static bool key_is_pressed(point_t p) {
+    matrix_row_t current = matrix_get_row(p.y);
+    matrix_row_t prev    = prev_matrix[p.y];
+    matrix_row_t mask    = (matrix_row_t)1 << p.x;
+    return (current & mask) && !(prev & mask);
+}
+
+#        define SNAKE_BODY_LENGTH 32
 typedef struct {
     direction_t dir;
     point_t     head;
-    point_t     body[32];
+    point_t     body[SNAKE_BODY_LENGTH];
     uint8_t     length;
 } snake_t;
 
@@ -218,6 +230,10 @@ static void snake_game_update(snake_game_state_t *state) {
         state->snake.length += 1;
         state->food = snake_game_get_food(state);
     }
+
+    if (state->snake.length == SNAKE_BODY_LENGTH) {
+        snake_game_setup(state);
+    }
 }
 
 static bool snake_game_render(effect_params_t *params, snake_game_state_t *state) {
@@ -245,7 +261,9 @@ static bool SNAKE(effect_params_t *params) {
         snake_game_setup(&snake_game_state);
     }
     snake_game_update(&snake_game_state);
-    return snake_game_render(params, &snake_game_state);
+    bool res = snake_game_render(params, &snake_game_state);
+    update_matrix_state();
+    return res;
 }
 
 #    endif // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
