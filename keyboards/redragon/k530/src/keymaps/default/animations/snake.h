@@ -120,26 +120,25 @@ static void snake_game_update(snake_game_state_t *state) {
         }
     }
 
-    point_t prev_pos   = state->snake.head;
-    uint8_t row_length = get_row_length(state->snake.head.y);
+    point_t prev_pos = state->snake.head;
 
     switch (state->snake.dir) {
         case DIR_LEFT:
-            state->snake.head.x = (state->snake.head.x == 1) ? row_length - 2 : state->snake.head.x - 1;
+            state->snake.head.x = (state->snake.head.x == 1) ? get_row_length(state->snake.head.y) - 2 : state->snake.head.x - 1;
             break;
         case DIR_RIGHT:
-            state->snake.head.x = (state->snake.head.x == row_length - 2) ? 1 : state->snake.head.x + 1;
+            state->snake.head.x = (state->snake.head.x == get_row_length(state->snake.head.y) - 2) ? 1 : state->snake.head.x + 1;
             break;
         case DIR_UP:
             state->snake.head.y = (state->snake.head.y == 1) ? MATRIX_ROWS - 2 : state->snake.head.y - 1;
-            if (state->snake.head.x > row_length - 2) {
-                state->snake.head.x = row_length - 2;
+            if (state->snake.head.x > get_row_length(state->snake.head.y) - 2) {
+                state->snake.head.x = get_row_length(state->snake.head.y) - 2;
             }
             break;
         case DIR_DOWN:
             state->snake.head.y = (state->snake.head.y == MATRIX_ROWS - 2) ? 1 : state->snake.head.y + 1;
-            if (state->snake.head.x > row_length - 2) {
-                state->snake.head.x = row_length - 2;
+            if (state->snake.head.x > get_row_length(state->snake.head.y) - 2) {
+                state->snake.head.x = get_row_length(state->snake.head.y) - 2;
             }
             break;
     }
