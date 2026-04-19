@@ -15,9 +15,10 @@
 		"lto": true
 	},
 	"features": {
+		"deferred_exec": true,
 		"extrakey": true,
-		"mousekey": true,
 		"key_override": true,
+		"mousekey": true,
 		"nkro": true,
 		"os_detection": true,
 		"rgb_matrix": true
