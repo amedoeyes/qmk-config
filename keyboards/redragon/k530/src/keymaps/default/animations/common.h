@@ -41,7 +41,7 @@ uint8_t point_into_index(point_t p) {
     return idx;
 }
 
-#define INPUT_BUFFER_SIZE 3
+#define INPUT_BUFFER_SIZE 4
 typedef struct {
     point_t data[INPUT_BUFFER_SIZE];
     uint8_t head;
