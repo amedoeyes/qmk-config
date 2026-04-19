@@ -17,7 +17,6 @@
 	"features": {
 		"deferred_exec": true,
 		"extrakey": true,
-		"key_override": true,
 		"mousekey": true,
 		"nkro": true,
 		"os_detection": true,

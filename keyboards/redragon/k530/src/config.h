@@ -5,7 +5,6 @@
 #define RGB_MATRIX_CUSTOM_USER
 
 #define MK_3_SPEED
-#define MK_MOMENTARY_ACCEL
 #define MK_C_OFFSET_UNMOD 4
 #define MK_C_INTERVAL_UNMOD 8
 #define MK_C_OFFSET_0 2
@@ -15,8 +14,8 @@
 #define MK_C_OFFSET_2 8
 #define MK_C_INTERVAL_2 4
 #define MK_W_OFFSET_0 2
-#define MK_W_INTERVAL_0 64
+#define MK_W_INTERVAL_0 128
 #define MK_W_OFFSET_1 4
-#define MK_W_INTERVAL_1 32
+#define MK_W_INTERVAL_1 64
 #define MK_W_OFFSET_2 8
-#define MK_W_INTERVAL_2 16
+#define MK_W_INTERVAL_2 32
