@@ -29,7 +29,6 @@
 	},
 
 	"keycodes": [
-		{ "key": "KC_RESET_LAYER", "aliases": ["KC_RSTL"] },
 		{ "key": "KC_LEFT_OS_SUPER", "aliases": ["KC_LOSS"] },
 		{ "key": "KC_RIGHT_OS_SUPER", "aliases": ["KC_ROSS"] },
 		{ "key": "QK_RGB_MATRIX_RESET", "aliases": ["RM_RST"] }

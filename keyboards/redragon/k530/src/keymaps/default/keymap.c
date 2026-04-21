@@ -13,9 +13,6 @@ typedef enum {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case KC_RSTL:
-            layer_move(L_BASE);
-            return false;
         case KC_LOSS:
             if (record->event.pressed) {
                 if (detected_host_os() == OS_WINDOWS) {
