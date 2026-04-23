@@ -106,7 +106,7 @@
 		}
 	},
 
-	"debounce": 3,
+	"debounce": 5,
 	"diode_direction": "COL2ROW",
 	"matrix_pins": {
 		"cols": [
